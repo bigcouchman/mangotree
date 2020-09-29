@@ -4,6 +4,7 @@ const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 const Constraint = Matter.Constraint;
+const Render = Matter.Render;
 var launchingForce=100;
 
 var tree,ground;
@@ -24,16 +25,16 @@ function setup() {
 	world = engine.world;
 
 	//Create the Bodies Here.
-tree = new Tree(600,615,50,400);
+tree = new Tree(600,700,50,400);
 ground = new Ground(400,height,800,20);
 
 stone = new Stone(230,600,20,20);
 
-mango1 = new Mango(575,475,50,50);
-mango2 = new Mango(585,505,50,50);
-mango3 = new Mango(555,495,50,50);
-mango4 = new Mango(505,475,50,50);
-mango5 = new Mango(500,515,50,50);
+mango1 = new Mango(575,305,30,30);
+mango2 = new Mango(630,318,30,30);
+mango3 = new Mango(520,320,30,30);
+mango4 = new Mango(570,355,30,30);
+mango5 = new Mango(650,295,30,30);
 
 slingShot = new Slingshot(stone.body,{x:200,y:615});
 var render = Render.create({
@@ -54,7 +55,7 @@ var render = Render.create({
 function draw() {
   textSize(25);
   text("Press space to get a second Chance to Play!",50 ,50);
-  image(boy ,200,340,200,300);
+  image(boy,200,700,100,100);
 
 
   rectMode(CENTER);
@@ -64,13 +65,15 @@ function draw() {
   ground.display();
 
   stone.display();
-  boy.display();
+  
 
   mango1.display();
   mango2.display();
   mango3.display();
   mango4.display();
   mango5.display();
+
+  slingShot.display();
 
   detectCollision(stone,mango1);
   detectCollision(stone,mango2);
@@ -103,3 +106,13 @@ function keyPressed() {
     stoneBodyPosition=lstone.body.position;
   }
 
+  var distance=dist(stoneBodyPosition.x, stoneBodyPosition.y, mangoBodyPosition.x, mangoBodyPosition.y)
+  //console.log(distance)
+ // console.log(lmango.r+lstone.r)
+  	if(distance<=lmango.r+lstone.r)
+    {
+      //console.log(distance);
+  	  Matter.Body.setStatic(lmango.body,false);
+    }
+
+  
