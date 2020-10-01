@@ -48,17 +48,19 @@ var render = Render.create({
 });
 
 	Engine.run(engine);
-  
+  Render.run(render);
 }
 
 
 function draw() {
+  frameRate(2);
+  Engine.update(engine);
   textSize(25);
   text("Press space to get a second Chance to Play!",50 ,50);
   image(boy,200,700,100,100);
 
 
-  rectMode(CENTER);
+ 
   background("skyblue");
   Engine.update(engine);
   tree.display();
@@ -91,6 +93,7 @@ function mouseDragged(){
 }
 function mouseReleased(){
     slingShot.fly();
+    distance=int(dist(stone.x,stone.y,mango1.x,mango1.y));
 }
 
 function keyPressed() {
@@ -101,10 +104,10 @@ function keyPressed() {
   }
 
   function detectCollision(lstone,lmango){
-
+      
     mangoBodyPosition=lmango.body.position;
     stoneBodyPosition=lstone.body.position;
-  }
+  
 
   var distance=dist(stoneBodyPosition.x, stoneBodyPosition.y, mangoBodyPosition.x, mangoBodyPosition.y)
   //console.log(distance)
@@ -114,5 +117,5 @@ function keyPressed() {
       //console.log(distance);
   	  Matter.Body.setStatic(lmango.body,false);
     }
-
+  }
   
